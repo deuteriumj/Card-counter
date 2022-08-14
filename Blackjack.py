@@ -6,7 +6,6 @@ human_cards_template = ["A", "A", "A", "A", 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 
 deck_amount = 1
 difficulty = 0
 running_count = 0
-true_count = 0
 
 computer_cards = []
 human_cards = []
@@ -22,7 +21,15 @@ def print_cards(dealer_cards, user_cards):
 def print_cards_real(dealer_cards, user_cards):
     print(f"\nDealer's cards:\n{' '.join(map(str, dealer_cards))}\nYour cards:\n{' '.join(map(str, user_cards))}")
 
-def blackjack(balance, difficulty):
+def to_count_value(a):
+    if a <= 6:
+        return 1
+    elif a >= 10:
+        return -1
+    else:
+        return 0
+
+def blackjack(balance, difficulty, deck_amount, running_count):
     # define balance and bet
     if difficulty == 3:
         print(f"Your balance is {balance}")
@@ -30,19 +37,30 @@ def blackjack(balance, difficulty):
     else:
         bet = 0
 
-    # generate the values for the computer
-    user_card1 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    computer_cards.remove(user_card1)
-    user_card2 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    computer_cards.remove(user_card2)
-    dealer_card1 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    computer_cards.remove(dealer_card1)
-    dealer_card2 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    computer_cards.remove(dealer_card2)
+    user_cards = []
+    dealer_cards = []
 
-    # generate the cards to show the user
-    user_cards = [human_cards[computer_cards.index(user_card1)], human_cards[computer_cards.index(user_card2)]]
-    dealer_cards = [human_cards[computer_cards.index(dealer_card1)], human_cards[computer_cards.index(dealer_card2)]]
+    # generate the values for the computer
+    # generate the values for the user
+    # add to the running count
+    user_card1 = computer_cards[random.randint(0, len(computer_cards)) - 1]
+    user_cards.append(human_cards[computer_cards.index(user_card1)])
+    computer_cards.remove(user_card1)
+    running_count += to_count_value(user_card1)
+
+    user_card2 = computer_cards[random.randint(0, len(computer_cards)) - 1]
+    user_cards.append(human_cards[computer_cards.index(user_card2)])
+    computer_cards.remove(user_card2)
+    running_count += to_count_value(user_card2)
+
+    dealer_card1 = computer_cards[random.randint(0, len(computer_cards)) - 1]
+    dealer_cards.append(human_cards[computer_cards.index(dealer_card1)])
+    computer_cards.remove(dealer_card1)
+    running_count += to_count_value(dealer_card1)
+
+    dealer_card2 = computer_cards[random.randint(0, len(computer_cards)) - 1]
+    dealer_cards.append(human_cards[computer_cards.index(dealer_card2)])
+    computer_cards.remove(dealer_card2)
 
     # remove used cards from decks
     human_cards.remove(user_cards[0])
@@ -90,6 +108,10 @@ def blackjack(balance, difficulty):
 
     while loop is True:
         print_cards(dealer_cards, user_cards)
+        if difficulty <= 2:
+            print(f"Running count: {running_count}")
+        if difficulty == 1:
+            print(f"True count: {running_count / deck_amount}")
 
         action = input(f"What would you like to do?\nYou can stand or hit{or_x2}\n>")
 
@@ -189,7 +211,6 @@ def main():
     difficulty = int(input("For easy mode type 1, for medium type 2 and for hard type 3\n>"))
     deck_amount = int(input("How many decks would you like there to be?\n>"))
     template_to_cards(deck_amount)
-    input(len(computer_cards))
 
     if difficulty == 3:
         balance = int(input("What is your balance?\n>"))
@@ -197,7 +218,7 @@ def main():
         balance = 1
 
     while balance > 0:
-        balance = blackjack(balance, difficulty)
+        balance = blackjack(balance, difficulty, deck_amount, running_count)
 
     print("You have no more money\nLeave the casino")
 

@@ -41,10 +41,15 @@ def blackjack(balance, difficulty, deck_amount):
     global running_count
     running_count = check_and_shuffle(running_count)
     
+    if difficulty <= 2:
+        print(f"Running count: {running_count}")
+    if difficulty == 1:
+        print(f"True count: {running_count / deck_amount}")
+
     # define balance and bet
     print(f"Your balance is {balance}")
     bet = int(input("How much would you like to bet?\n>"))
-    
+
     user_cards = []
     dealer_cards = []
 

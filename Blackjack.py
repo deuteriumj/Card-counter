@@ -119,6 +119,7 @@ def blackjack(balance, difficulty, deck_amount, running_count):
         if action == "hit":
             new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
             user_sum += new_card
+            running_count += to_count_value(new_card)
             card_index = computer_cards.index(new_card)
             user_cards.append(human_cards[card_index])
 
@@ -144,6 +145,7 @@ def blackjack(balance, difficulty, deck_amount, running_count):
             if can_double is True:
                 new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
                 user_sum += new_card
+                running_count += to_count_value(new_card)
                 card_index = computer_cards.index(new_card)
                 user_cards.append(human_cards[card_index])
 
@@ -168,9 +170,11 @@ def blackjack(balance, difficulty, deck_amount, running_count):
         # if the player stands
         elif action == "stand":
             print_cards_real(dealer_cards, user_cards)
+            running_count += to_count_value(dealer_card2)
             while dealer_sum < 17:
                 new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
                 dealer_sum += new_card
+                running_count += to_count_value(new_card)
                 card_index = computer_cards.index(new_card)
                 dealer_cards.append(human_cards[card_index])
                 print_cards_real(dealer_cards, user_cards)
@@ -208,7 +212,7 @@ def blackjack(balance, difficulty, deck_amount, running_count):
 # main lines of code
 def main():
     print("Hello, welcome to the card counting trainer!")
-    difficulty = int(input("For easy mode type 1, for medium type 2 and for hard type 3\n>"))
+    difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
     deck_amount = int(input("How many decks would you like there to be?\n>"))
     template_to_cards(deck_amount)
 

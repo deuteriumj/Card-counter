@@ -1,43 +1,17 @@
 import random
 
-# turn the determined value into a card for the user to see
-def into_card(a):
-    card = ""
+computer_cards_template = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+human_cards_template = ["A", "A", "A", "A", 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K"]
 
-    # value
-    if a == 1:
-        card += "A"
-    elif a == 11:
-        card += "J"
-    elif a == 12:
-        card += "Q"
-    elif a == 13:
-        card += "K"
-    else:
-        card += str(a)
+deck_amount = 1
 
-    # suit
-    b = random.randint(1, 4)
-    if b == 1:
-        card += "♣"
-    elif b == 2:
-        card += "♥"
-    elif b == 3:
-        card += "♠"
-    else:
-        card += "♦"
+computer_cards = []
+human_cards = []
 
-    return card
-
-# turn the larger values back into 10s whilst keeping the chance of getting 10 higher
-def to_real_value(a):
-    if a == 11 or a == 12 or a == 13:
-        return 10
-    elif a == 1:
-        return 11
-    else:
-        return a
-
+def template_to_cards():
+    for i in range(deck_amount):
+        computer_cards.append(computer_cards_template)
+        human_cards.append(human_cards_template)
 
 def blackjack(balance):
     # define balance and bet

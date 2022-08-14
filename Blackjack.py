@@ -1,7 +1,7 @@
 import random
 
 computer_cards_template = [11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
-human_cards_template = ["A", "A", "A", "A", 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K"]
+human_cards_template = ["A♣", "A♥", "A♠", "A♦", "2♣", "2♥", "2♠", "2♦", "3♣", "3♥", "3♠", "3♦", "4♣", "4♥", "4♠", "4♦", "5♣", "5♥", "5♠", "5♦", "6♣", "6♥", "6♠", "6♦", "7♣", "7♥", "7♠", "7♦", "8♣", "8♥", "8♠", "8♦", "9♣", "9♥", "9♠"," 9♦", "10♣", "10♥", "10♠", "10♦", "J♣", "J♥", "J♠", "J♦", "Q♣", "Q♥", "Q♠", "Q♦", "K♣", "K♥", "K♠", "K♦"]
 
 deck_amount = 1
 difficulty = 0
@@ -16,10 +16,10 @@ def template_to_cards(deck_amount):
         human_cards.extend(human_cards_template)
 
 def print_cards(dealer_cards, user_cards):
-    print(f"\nDealer's cards:\n{dealer_cards[0]} _\nYour cards:\n{' '.join(map(str, user_cards))}")
+    print(f"\nDealer's cards:\n{dealer_cards[0]} _\nYour cards:\n{' '.join(user_cards)}")
 
 def print_cards_real(dealer_cards, user_cards):
-    print(f"\nDealer's cards:\n{' '.join(map(str, dealer_cards))}\nYour cards:\n{' '.join(map(str, user_cards))}")
+    print(f"\nDealer's cards:\n{' '.join(dealer_cards)}\nYour cards:\n{' '.join(user_cards)}")
 
 def to_count_value(a):
     if a <= 6:

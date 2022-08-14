@@ -20,7 +20,7 @@ def print_cards(dealer_cards, user_cards):
     print(f"\nDealer's cards:\n{dealer_cards[0]} _\nYour cards:\n{' '.join(map(str, user_cards))}")
 
 def print_cards_real(dealer_cards, user_cards):
-    print(f"\nDealer's cards:\n{' '.join(map(str, dealer_cards))}\nYour cards:\n{' '.join(map(user_cards))}")
+    print(f"\nDealer's cards:\n{' '.join(map(str, dealer_cards))}\nYour cards:\n{' '.join(map(str, user_cards))}")
 
 def blackjack(balance, difficulty):
     # define balance and bet
@@ -70,9 +70,6 @@ def blackjack(balance, difficulty):
     loop = True
     can_double = True
     or_x2 = " or x2"
-    bust = False
-
-    print_cards(dealer_cards, user_cards)
 
     # starting blackjack detection for user
     if user_sum == 21:
@@ -82,26 +79,29 @@ def blackjack(balance, difficulty):
             print("It's a push!")
         else:
             print("You got Blackjack!")
-            balance += bet * 2.5
+            return balance + bet * 1.5
     
     # starting blackjack detection for dealer
     if dealer_sum == 21:
         loop = False
         print_cards_real(dealer_cards, user_cards)
         print(f"\nUnfortunate, the dealer got Blackjack!")
-        balance -= bet
+        return balance - bet
 
     while loop is True:
-        action = input(f"What would you like to do?\nYou can stand or hit{or_x2}\n-")
+        print_cards(dealer_cards, user_cards)
+
+        action = input(f"What would you like to do?\nYou can stand or hit{or_x2}\n>")
 
         # if the player hits
         if action == "hit":
             new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
             user_sum += new_card
-            user_cards.append(human_cards[computer_cards.index(new_card)])
+            card_index = computer_cards.index(new_card)
+            user_cards.append(human_cards[card_index])
 
-            human_cards.pop(user_cards.index(computer_cards.index(new_card)))
-            computer_cards.remove(new_card)
+            human_cards.pop(card_index)
+            computer_cards.pop(card_index)
 
             # makes aces work dw about it
             if new_card == 11:
@@ -112,7 +112,9 @@ def blackjack(balance, difficulty):
                     user_sum -= 10
                     user_aces -= 1
                 else:
-                    loop = False
+                    print_cards_real(dealer_cards, user_cards)
+                    print("Unfortunate, you bust!")
+                    return balance - bet
 
         # if the player doubles
         elif action == "x2":
@@ -120,10 +122,11 @@ def blackjack(balance, difficulty):
             if can_double is True:
                 new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
                 user_sum += new_card
-                user_cards.append(human_cards[computer_cards.index(new_card)])
+                card_index = computer_cards.index(new_card)
+                user_cards.append(human_cards[card_index])
 
-                human_cards.pop(user_cards.index(computer_cards.index(new_card)))
-                computer_cards.remove(new_card)
+                human_cards.pop(card_index)
+                computer_cards.pop(card_index)
 
                 # makes aces work dw about it
                 if new_card == 11:
@@ -134,23 +137,24 @@ def blackjack(balance, difficulty):
                         user_sum -= 10
                         user_aces -= 1
                     else:
-                        loop = False
+                        print_cards_real(dealer_cards, user_cards)
+                        print("Unfortunate, you bust!")
+                        return balance - bet
 
                 bet += bet
-
-                loop = False
 
         # if the player stands
         elif action == "stand":
             print_cards_real(dealer_cards, user_cards)
-            while dealer_sum < 17 and not bust:
+            while dealer_sum < 17:
                 new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
                 dealer_sum += new_card
-                dealer_cards.append(human_cards[computer_cards.index(new_card)])
+                card_index = computer_cards.index(new_card)
+                dealer_cards.append(human_cards[card_index])
                 print_cards_real(dealer_cards, user_cards)
 
-                human_cards.pop(human_cards.index(computer_cards.index(new_card)))
-                computer_cards.remove(new_card)
+                human_cards.pop(card_index)
+                computer_cards.pop(card_index)
 
                 # makes aces work dw about it
                 if new_card == 11:
@@ -161,8 +165,7 @@ def blackjack(balance, difficulty):
                         dealer_sum -= 10
                         dealer_aces -= 1
                     else:
-                        bust = True
-                        dealer_sum = 0
+                        return balance + bet
 
                 
             if user_sum == dealer_sum:

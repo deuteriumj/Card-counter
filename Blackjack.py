@@ -136,7 +136,7 @@ def blackjack(balance, difficulty, deck_amount):
 
         # if the player hits
         if action == "hit":
-            new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
+            new_card = computer_cards[random.randint(0, len(computer_cards) - 1)]
             user_sum += new_card
             running_count += to_count_value(new_card)
             card_index = computer_cards.index(new_card)
@@ -162,7 +162,7 @@ def blackjack(balance, difficulty, deck_amount):
         elif action == "x2":
             # ensures this can only be done on the first round
             if can_double is True:
-                new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
+                new_card = computer_cards[random.randint(0, len(computer_cards) - 1)]
                 user_sum += new_card
                 running_count += to_count_value(new_card)
                 card_index = computer_cards.index(new_card)
@@ -191,7 +191,7 @@ def blackjack(balance, difficulty, deck_amount):
             print_cards_real(dealer_cards, user_cards)
             running_count += to_count_value(dealer_card2)
             while dealer_sum < 17:
-                new_card = computer_cards[random.randint(0, len(computer_cards)) - 1]
+                new_card = computer_cards[random.randint(0, len(computer_cards) - 1)]
                 dealer_sum += new_card
                 running_count += to_count_value(new_card)
                 card_index = computer_cards.index(new_card)
@@ -229,24 +229,17 @@ def blackjack(balance, difficulty, deck_amount):
         or_x2 = ""
 
 # main lines of code
-def main():
-    print("Hello, welcome to the card counting trainer!\nThis casino reshuffles after ≈50% has been dealt")
-    if difficulty != 1 and difficulty != 2 and difficulty != 3:
-        difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
-    deck_amount = int(input("How many decks would you like there to be?\n>"))
-    template_to_cards(deck_amount)
+print("Hello, welcome to the card counting trainer!\nThis casino reshuffles after ≈50% has been dealt")
+difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
+deck_amount = int(input("How many decks would you like there to be?\n>"))
+template_to_cards(deck_amount)
 
-    if difficulty == 3:
-        balance = int(input("What is your balance?\n>"))
-    else:
-        balance = 1
+if difficulty == 3:
+    balance = int(input("What is your balance?\n>"))
+else:
+    balance = 1
 
-    while balance > 0:
-        balance = blackjack(balance, difficulty, deck_amount)
+while balance > 0:
+    balance = blackjack(balance, difficulty, deck_amount)
 
-    print("You have no more money\nLeave the casino")
-
-
-# run code when code is run
-if __name__ == "__main__":
-    main()
+print("You have no more money\nLeave the casino")

@@ -42,12 +42,9 @@ def blackjack(balance, difficulty, deck_amount):
     running_count = check_and_shuffle(running_count)
     
     # define balance and bet
-    if difficulty == 3:
-        print(f"Your balance is {balance}")
-        bet = int(input("How much would you like to bet?\n-"))
-    else:
-        bet = 0
-
+    print(f"Your balance is {balance}")
+    bet = int(input("How much would you like to bet?\n>"))
+    
     user_cards = []
     dealer_cards = []
 
@@ -240,11 +237,7 @@ print("At any point, type \"hint\" to get a hint")
 difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
 deck_amount = int(input("How many decks would you like there to be?\n>"))
 template_to_cards(deck_amount)
-
-if difficulty == 3:
-    balance = int(input("What is your balance?\n>"))
-else:
-    balance = 1
+balance = int(input("What is your balance?\n>"))
 
 while balance > 0:
     balance = blackjack(balance, difficulty, deck_amount)

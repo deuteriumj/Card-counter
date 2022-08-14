@@ -186,6 +186,12 @@ def blackjack(balance, difficulty, deck_amount):
 
                 bet += bet
 
+        elif action == "hint":
+            if running_count / deck_amount >= 1:
+                print(f"The count is {running_count}, it is getting high so you should bet higher\nRemember the higher the number the higher % of high cards")
+            else:
+                print(f"The count is {running_count}, it is getting low so you should bet lower\nRemember the lower the number the lower % of high cards")
+
         # if the player stands
         elif action == "stand":
             print_cards_real(dealer_cards, user_cards)
@@ -230,6 +236,7 @@ def blackjack(balance, difficulty, deck_amount):
 
 # main lines of code
 print("Hello, welcome to the card counting trainer!\nThis casino reshuffles after ≈50% has been dealt")
+print("At any point, type \"hint\" to get a hint")
 difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
 deck_amount = int(input("How many decks would you like there to be?\n>"))
 template_to_cards(deck_amount)

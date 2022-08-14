@@ -10,6 +10,14 @@ running_count = 0
 computer_cards = []
 human_cards = []
 
+def check_and_shuffle(running_count):
+    if len(computer_cards) < len(computer_cards_template) * deck_amount / 2:
+        template_to_cards(deck_amount)
+        print("The deck has been shuffled")
+        return 0
+    else:
+        return running_count
+
 def template_to_cards(deck_amount):
     for i in range(deck_amount):
         computer_cards.extend(computer_cards_template)
@@ -29,7 +37,10 @@ def to_count_value(a):
     else:
         return 0
 
-def blackjack(balance, difficulty, deck_amount, running_count):
+def blackjack(balance, difficulty, deck_amount):
+    global running_count
+    check_and_shuffle(running_count)
+    
     # define balance and bet
     if difficulty == 3:
         print(f"Your balance is {balance}")
@@ -107,6 +118,7 @@ def blackjack(balance, difficulty, deck_amount, running_count):
         return balance - bet
 
     while loop is True:
+        check_and_shuffle(running_count)
         print_cards(dealer_cards, user_cards)
         if difficulty <= 2:
             print(f"Running count: {running_count}")
@@ -211,7 +223,7 @@ def blackjack(balance, difficulty, deck_amount, running_count):
 
 # main lines of code
 def main():
-    print("Hello, welcome to the card counting trainer!")
+    print("Hello, welcome to the card counting trainer!\nThis casino reshuffles after ≈50% has been dealt")
     difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
     deck_amount = int(input("How many decks would you like there to be?\n>"))
     template_to_cards(deck_amount)
@@ -222,7 +234,7 @@ def main():
         balance = 1
 
     while balance > 0:
-        balance = blackjack(balance, difficulty, deck_amount, running_count)
+        balance = blackjack(balance, difficulty, deck_amount)
 
     print("You have no more money\nLeave the casino")
 

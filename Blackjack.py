@@ -1,9 +1,12 @@
 import random
 
-computer_cards_template = [1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+computer_cards_template = [11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 human_cards_template = ["A", "A", "A", "A", 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K"]
 
 deck_amount = 1
+difficulty = 0
+running_count = 0
+true_count = 0
 
 computer_cards = []
 human_cards = []
@@ -15,21 +18,24 @@ def template_to_cards():
 
 def blackjack(balance):
     # define balance and bet
-    print(f"Your balance is {balance}")
-    bet = int(input("How much would you like to bet?\n-"))
+    if difficulty == 3:
+        print(f"Your balance is {balance}")
+        bet = int(input("How much would you like to bet?\n-"))
+    else:
+        bet = 0
 
     # generate the values for the computer
-    user_card1 = random.randint(1, 13)
-    user_card2 = random.randint(1, 13)
-    dealer_card1 = random.randint(1, 13)
-    dealer_card2 = random.randint(1, 13)
+    user_card1 = computer_cards[random.randint(1, len(computer_cards))]
+    user_card2 = computer_cards[random.randint(1, len(computer_cards))]
+    dealer_card1 = computer_cards[random.randint(1, len(computer_cards))]
+    dealer_card2 = computer_cards[random.randint(1, len(computer_cards))]
 
     # generate the cards to show the user
-    user_cards = f"{into_card(user_card1)} {into_card(user_card2)}"
-    dealer_cards = f"{into_card(dealer_card1)} {into_card(dealer_card2)}"
+    user_cards = f"{human_cards[computer_cards.index(user_card1)]} {human_cards[computer_cards.index(user_card2)]}"
+    dealer_cards = f"{human_cards[computer_cards.index(dealer_card1)]} {human_cards[computer_cards.index(dealer_card2)]}"
 
-    user_sum = to_real_value(user_card1) + to_real_value(user_card2)
-    dealer_sum = to_real_value(dealer_card1) + to_real_value(dealer_card2)
+    user_sum = user_card1 + user_card2
+    dealer_sum = dealer_card1 + dealer_card2
 
     # let the program know who has aces and how many
     user_aces = 0
@@ -148,9 +154,19 @@ def blackjack(balance):
 
 # main lines of code
 def main():
-    balance = int(input("What is your balance?\n-"))
+    print("Hello, welcome to the card counting trainer!")
+    difficulty = int(input("For easy mode type 1, for medium type 2 and for hard type 3\n>"))
+    deck_amount = int(input("How many decks would you like there to be?\n>"))
+    template_to_cards()
+
+    if difficulty == 3:
+        balance = int(input("What is your balance?\n-"))
+    else:
+        balance = 1
+
     while balance > 0:
-        balance = blackjack(balance)
+        balance = blackjack(balance, difficulty)
+
     print("You have no more money\nLeave the casino")
 
 

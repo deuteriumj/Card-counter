@@ -51,33 +51,40 @@ def blackjack(balance, difficulty, deck_amount):
     user_cards = []
     dealer_cards = []
 
-    # generate the values for the computer
-    # generate the values for the user
-    # add to the running count
-    user_card1 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    user_cards.append(human_cards[computer_cards.index(user_card1)])
-    computer_cards.remove(user_card1)
+    # generate an index to use for both arrays
+    # generate the value for the computer using said index
+    # generate the value for the user using said index
+    # remove the value from the computer cards
+    # remove the value from the user cards
+    # edit the running count
+
+    card_index = random.randint(0, len(computer_cards) - 1) 
+    user_card1 = computer_cards[card_index]
+    user_cards.append(human_cards[card_index])
+    computer_cards.pop(card_index)
+    human_cards.pop(card_index)
     running_count += to_count_value(user_card1)
 
-    user_card2 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    user_cards.append(human_cards[computer_cards.index(user_card2)])
-    computer_cards.remove(user_card2)
+    card_index = random.randint(0, len(computer_cards) - 1)
+    user_card2 = computer_cards[card_index]
+    user_cards.append(human_cards[card_index])
+    computer_cards.pop(card_index)
+    human_cards.pop(card_index)
     running_count += to_count_value(user_card2)
 
-    dealer_card1 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    dealer_cards.append(human_cards[computer_cards.index(dealer_card1)])
-    computer_cards.remove(dealer_card1)
+    card_index = random.randint(0, len(computer_cards) - 1)
+    dealer_card1 = computer_cards[card_index]
+    dealer_cards.append(human_cards[card_index])
+    computer_cards.pop(dealer_card1)
+    human_cards.pop(dealer_card1)
     running_count += to_count_value(dealer_card1)
 
-    dealer_card2 = computer_cards[random.randint(0, len(computer_cards)) - 1]
-    dealer_cards.append(human_cards[computer_cards.index(dealer_card2)])
-    computer_cards.remove(dealer_card2)
-
-    # remove used cards from decks
-    human_cards.remove(user_cards[0])
-    human_cards.remove(user_cards[1])
-    human_cards.remove(dealer_cards[0])
-    human_cards.remove(dealer_cards[1])
+    card_index = random.randint(0, len(computer_cards) - 1)
+    dealer_card2 = computer_cards[card_index]
+    dealer_cards.append(human_cards[card_index])
+    computer_cards.pop(dealer_card2)
+    human_cards.pop(dealer_card2)
+    # don't change the count cause the user can't see this card
 
     # calculate the sums for the user and dealer
     user_sum = user_card1 + user_card2

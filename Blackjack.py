@@ -39,7 +39,7 @@ def to_count_value(a):
 
 def blackjack(balance, difficulty, deck_amount):
     global running_count
-    check_and_shuffle(running_count)
+    running_count = check_and_shuffle(running_count)
     
     # define balance and bet
     if difficulty == 3:
@@ -113,6 +113,7 @@ def blackjack(balance, difficulty, deck_amount):
         print_cards_real(dealer_cards, user_cards)
         if dealer_sum == 21:
             print("It's a push!")
+            return balance
         else:
             print("You got Blackjack!")
             return balance + bet * 1.5
@@ -125,14 +126,13 @@ def blackjack(balance, difficulty, deck_amount):
         return balance - bet
 
     while loop is True:
-        check_and_shuffle(running_count)
         print_cards(dealer_cards, user_cards)
         if difficulty <= 2:
             print(f"Running count: {running_count}")
         if difficulty == 1:
             print(f"True count: {running_count / deck_amount}")
 
-        action = input(f"What would you like to do?\nYou can stand or hit{or_x2}\n>")
+        action = input(f"What would you like to do?\nYou can stand or hit{or_x2}\n>").lower()
 
         # if the player hits
         if action == "hit":
@@ -216,6 +216,7 @@ def blackjack(balance, difficulty, deck_amount):
                 
             if user_sum == dealer_sum:
                 print("Interesting, a push!")
+                return balance
             if user_sum < dealer_sum:
                 print("Unfortunate, the dealer wins!")
                 return balance - bet
@@ -226,7 +227,6 @@ def blackjack(balance, difficulty, deck_amount):
             loop = False
         can_double = False
         or_x2 = ""
-
 
 # main lines of code
 def main():

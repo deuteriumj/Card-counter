@@ -1,7 +1,7 @@
 import random
 
-computer_cards_template = [11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
-human_cards_template = ["A", "A", "A", "A", 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K"]
+computer_cards_template = [11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
+human_cards_template = ["A", "A", "A", "A", 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, "J", "J", "J", "J", "Q", "Q", "Q", "Q", "K", "K", "K", "K"]
 
 deck_amount = 1
 difficulty = 0
@@ -11,7 +11,7 @@ true_count = 0
 computer_cards = []
 human_cards = []
 
-def template_to_cards():
+def template_to_cards(deck_amount):
     for i in range(deck_amount):
         computer_cards.extend(computer_cards_template)
         human_cards.extend(human_cards_template)
@@ -165,6 +165,7 @@ def blackjack(balance, difficulty):
                         dealer_sum -= 10
                         dealer_aces -= 1
                     else:
+                        print("Awesome, the dealer busts!")
                         return balance + bet
 
                 
@@ -187,7 +188,8 @@ def main():
     print("Hello, welcome to the card counting trainer!")
     difficulty = int(input("For easy mode type 1, for medium type 2 and for hard type 3\n>"))
     deck_amount = int(input("How many decks would you like there to be?\n>"))
-    template_to_cards()
+    template_to_cards(deck_amount)
+    input(len(computer_cards))
 
     if difficulty == 3:
         balance = int(input("What is your balance?\n>"))

@@ -231,7 +231,8 @@ def blackjack(balance, difficulty, deck_amount):
 # main lines of code
 def main():
     print("Hello, welcome to the card counting trainer!\nThis casino reshuffles after ≈50% has been dealt")
-    difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
+    if difficulty != 1 and difficulty != 2 and difficulty != 3:
+        difficulty = int(input("For easy mode type 1 (you will see the running count and the true count)\nfor normal type 2 (you will see only the running count)\nand for hard type 3 (normal blackjack with no extra help)\n>"))
     deck_amount = int(input("How many decks would you like there to be?\n>"))
     template_to_cards(deck_amount)
 

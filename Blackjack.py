@@ -37,6 +37,13 @@ def to_count_value(a):
     else:
         return 0
 
+def print_hint(deck_amount):
+    if running_count / deck_amount >= 1:
+        print(f"The count is {running_count}, it is getting high so you should bet higher\nRemember the higher the number the higher % of high cards")
+    else:
+        print(f"The count is {running_count}, it is getting low so you should bet lower\nRemember the lower the number the lower % of high cards")
+
+
 def blackjack(balance, difficulty, deck_amount):
     global running_count
     running_count = check_and_shuffle(running_count)
@@ -48,7 +55,13 @@ def blackjack(balance, difficulty, deck_amount):
 
     # define balance and bet
     print(f"Your balance is {balance}")
-    bet = int(input("How much would you like to bet?\n>"))
+    bet = "hint"
+    while bet == "hint":
+        bet = input("How much would you like to bet?\n>")
+        if bet == "hint":
+            print_hint(deck_amount)
+        else:
+            bet = int(bet)
 
     user_cards = []
     dealer_cards = []
@@ -189,10 +202,7 @@ def blackjack(balance, difficulty, deck_amount):
                 bet += bet
 
         elif action == "hint":
-            if running_count / deck_amount >= 1:
-                print(f"The count is {running_count}, it is getting high so you should bet higher\nRemember the higher the number the higher % of high cards")
-            else:
-                print(f"The count is {running_count}, it is getting low so you should bet lower\nRemember the lower the number the lower % of high cards")
+            print_hint()
 
         # if the player stands
         elif action == "stand":

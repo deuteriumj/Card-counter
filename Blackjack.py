@@ -3,20 +3,12 @@ import random
 computer_cards_template = [11, 11, 11, 11, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8 ,8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 human_cards_template = ["A♣", "A♥", "A♠", "A♦", "2♣", "2♥", "2♠", "2♦", "3♣", "3♥", "3♠", "3♦", "4♣", "4♥", "4♠", "4♦", "5♣", "5♥", "5♠", "5♦", "6♣", "6♥", "6♠", "6♦", "7♣", "7♥", "7♠", "7♦", "8♣", "8♥", "8♠", "8♦", "9♣", "9♥", "9♠"," 9♦", "10♣", "10♥", "10♠", "10♦", "J♣", "J♥", "J♠", "J♦", "Q♣", "Q♥", "Q♠", "Q♦", "K♣", "K♥", "K♠", "K♦"]
 
-deck_amount = 1
-difficulty = 0
-running_count = 0
-
 computer_cards = []
 human_cards = []
 
-def check_and_shuffle(running_count):
-    if len(computer_cards) < len(computer_cards_template) * deck_amount / 2:
-        template_to_cards(deck_amount)
-        print("The deck has been shuffled")
-        return 0
-    else:
-        return running_count
+deck_amount = 1
+difficulty = 0
+running_count = 0
 
 def template_to_cards(deck_amount):
     for i in range(deck_amount):
@@ -46,7 +38,10 @@ def print_hint(deck_amount):
 
 def blackjack(balance, difficulty, deck_amount):
     global running_count
-    running_count = check_and_shuffle(running_count)
+    if len(computer_cards) < len(computer_cards_template) * deck_amount / 2:
+        template_to_cards(deck_amount)
+        print("The deck has been shuffled")
+        running_count = 0
     
     if difficulty <= 2:
         print(f"Running count: {running_count}")
@@ -58,10 +53,13 @@ def blackjack(balance, difficulty, deck_amount):
     bet = "hint"
     while bet == "hint":
         bet = input("How much would you like to bet?\n>")
-        if bet == "hint":
-            print_hint(deck_amount)
-        else:
-            bet = int(bet)
+        try:
+            if bet == "hint":
+                print_hint(deck_amount)
+            else:
+                bet = int(bet)
+        except Exception:
+            bet = "hint"
 
     user_cards = []
     dealer_cards = []
